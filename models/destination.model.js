@@ -31,8 +31,7 @@ const destinationSchema = new Schema({
         },
         coordinates: {
             type: [Number],
-            required: true,
-            index: '2dsphere'
+            required: true
         }
     },
     address: {
@@ -61,6 +60,7 @@ const destinationSchema = new Schema({
 });
 
 destinationSchema.index({ name: 'text', description: 'text', tags: 'text' });
+destinationSchema.index({ location: '2dsphere' });
 
 const Destination = mongoose.model('Destination', destinationSchema);
 
