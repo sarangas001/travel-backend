@@ -20,7 +20,7 @@ app.use(express.json());
 app.get('/', (req, res) => {
 	res.status(200).json({
 		status: 'ok',
-		service: 'travel-backend',
+		service: connectDatabase() ? 'connected' : 'not connected',
         database: process.env.MONGODB_URI ? 'connected' : 'not connected',
 		timestamp: new Date().toISOString()
 	});
