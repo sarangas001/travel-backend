@@ -4,8 +4,11 @@ const {
     saveDestination,
     unsaveDestination
 } = require('../controllers/savedPlaces.controller');
+const { protect } = require('../middleware/auth');
 
 const router = express.Router();
+
+router.use(protect);
 
 router.get('/', listSavedPlaces);
 router.post('/', saveDestination);
