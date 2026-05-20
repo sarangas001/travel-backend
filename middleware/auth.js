@@ -1,20 +1,17 @@
 const { verifyAccessToken } = require('../utils/auth');
 
 const protect = (req, res, next) => {
-    const token = req.cookies.token ;
+    const token = req.cookies.token;
 
     if (!token) {
         return res.status(401).json({ message: 'Not authorized, token missing' });
     }
     try {
         const decoded = verifyAccessToken(token);
-        console.log('Decoded token:', decoded);
-        console.log('Decoded token:', decoded);
+        
         req.user = decoded;
         next();
     } catch (error) {
-        // return res.status(401).json({ message: 'Not authorized, token invalid' });
-        console.error('Token verification error:', error);
         return res.status(401).json({ message: 'Not authorized, token invalid' });
     }
 };

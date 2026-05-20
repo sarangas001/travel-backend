@@ -37,7 +37,15 @@ const signRefreshToken = (payload) => {
     });
 };
 
-const verifyAccessToken = (token) => jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+const verifyAccessToken = (token) => {
+    try{
+        return jwt.verify(token, process.env.JWT_ACCESS_SECRET)
+    }catch(error){
+        console.error('Access token verification failed:', error);
+        throw new Error('Invalid access token');
+    }
+    
+};
 
 const verifyRefreshToken = (token) => jwt.verify(token, process.env.JWT_REFRESH_SECRET);
 

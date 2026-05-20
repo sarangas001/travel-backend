@@ -15,6 +15,17 @@ const {
     validateLoginPayload
 } = require('../validation/requests');
 
+const accessTokenCookieOptions = {
+    httpOnly: true,
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 15 * 60 * 1000
+};
+
+const setAuthCookies = (res, accessToken) => {
+    res.cookie('token', accessToken, accessTokenCookieOptions);
+};
+
 const buildAuthResponse = async (user) => {
     const accessToken = signAccessToken({
         sub: user._id.toString(),
@@ -75,6 +86,7 @@ const register = async (req, res, next) => {
         });
 
         const authResponse = await buildAuthResponse(user);
+        setAuthCookies(res, authResponse.accessToken);
 
         res.status(201).json(authResponse);
     } catch (error) {
@@ -104,6 +116,7 @@ const login = async (req, res, next) => {
         }
 
         const authResponse = await buildAuthResponse(user);
+        setAuthCookies(res, authResponse.accessToken);
 
         res.status(200).json(authResponse);
     } catch (error) {
@@ -146,6 +159,7 @@ const refreshToken = async (req, res, next) => {
         await storedToken.save();
 
         const authResponse = await buildAuthResponse(user);
+        setAuthCookies(res, authResponse.accessToken);
 
         res.status(200).json(authResponse);
     } catch (error) {
@@ -173,9 +187,12 @@ const logout = async (req, res, next) => {
             await storedToken.save();
         }
 
-        res.status(200).json({ message: 'Logged out successfully' });
+        await res.clearCookie('token');
+        await res.clearCookie('refreshToken');
+
+        return res.status(200).json({ message: 'Logged out successfully' });
     } catch (error) {
-        res.status(200).json({ message: 'Logged out successfully' });
+        return res.status(200).json({ message: 'Logged out successfully' });
     }
 };
 
