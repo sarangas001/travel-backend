@@ -11,7 +11,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-	origin: '*',
+	origin: ['http://localhost:8081', 'exp://192.168.1.7:8081'],
 	credentials: true
 }));
 app.use(express.urlencoded({ extended: true }));
