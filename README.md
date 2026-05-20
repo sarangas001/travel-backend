@@ -1,3 +1,14 @@
+# Travel Backend
+
+Backend service for the mobile travel application.
+
+## Current Status
+
+- Express application bootstrap is wired
+- MongoDB connection helper is in place
+- Versioned API route tree exists
+- Destination read endpoints are implemented
+- Auth, account, and saved-places routes are scaffolded for the next build slice
 # Travel Backend Planning Docs
 
 This directory contains the planning artifacts for the mobile travel application backend and related product architecture.
