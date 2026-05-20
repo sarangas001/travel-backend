@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const apiRouter = require('./routes');
 const { notFound, errorHandler } = require('./middleware/errorHandler');
+const connectDatabase = require('./config/database');
 
 dotenv.config();
 
