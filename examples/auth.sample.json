@@ -1,0 +1,17 @@
+{
+  "register": {
+    "username": "jane_doe",
+    "email": "jane@example.com",
+    "password": "Password123!"
+  },
+  "login": {
+    "email": "jane@example.com",
+    "password": "Password123!"
+  },
+  "refresh": {
+    "refreshToken": "eyJhbGciOi..."
+  },
+  "logout": {
+    "refreshToken": "eyJhbGciOi..."
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "usersFile": "users.sample.json",
+  "adminFile": "admin.sample.json",
+  "destinationsFile": "destinations.sample.json",
+  "reviewsFile": "reviews.sample.json",
+  "savedPlacesFile": "savedPlaces.sample.json",
+  "authFile": "auth.sample.json",
+  "accountFile": "account.sample.json"
+}

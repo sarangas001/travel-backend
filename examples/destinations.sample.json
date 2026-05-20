@@ -1,0 +1,60 @@
+[
+  {
+    "_id": "665000000000000000000101",
+    "name": "Blue Lagoon Beach",
+    "description": "A scenic coastal destination with clear water, soft sand, and sunset views.",
+    "category": "Beach",
+    "media": [
+      {
+        "type": "image",
+        "url": "https://cdn.example.com/destinations/blue-lagoon-1.jpg",
+        "caption": "Blue Lagoon shoreline"
+      }
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [120.9842, 14.5995]
+    },
+    "address": {
+      "street": "Sunset Avenue",
+      "city": "Manila",
+      "state": "Metro Manila",
+      "country": "Philippines",
+      "zipCode": "1000"
+    },
+    "ratingAverage": 4.8,
+    "reviewCount": 12,
+    "tags": ["beach", "sunset", "swimming"],
+    "createdAt": "2026-05-20T00:00:00.000Z",
+    "updatedAt": "2026-05-20T00:00:00.000Z"
+  },
+  {
+    "_id": "665000000000000000000102",
+    "name": "Skyline Mountain Trail",
+    "description": "A high-elevation hiking route with panoramic views and well-marked trekking paths.",
+    "category": "Mountain",
+    "media": [
+      {
+        "type": "image",
+        "url": "https://cdn.example.com/destinations/skyline-trail-1.jpg",
+        "caption": "Mountain trail overview"
+      }
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [121.0437, 14.676]
+    },
+    "address": {
+      "street": "Trail Road",
+      "city": "Quezon City",
+      "state": "Metro Manila",
+      "country": "Philippines",
+      "zipCode": "1100"
+    },
+    "ratingAverage": 4.6,
+    "reviewCount": 8,
+    "tags": ["hiking", "adventure", "nature"],
+    "createdAt": "2026-05-20T00:00:00.000Z",
+    "updatedAt": "2026-05-20T00:00:00.000Z"
+  }
+]

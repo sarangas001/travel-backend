@@ -1,0 +1,34 @@
+[
+  {
+    "_id": "665000000000000000000001",
+    "username": "jane_doe",
+    "email": "jane@example.com",
+    "passwordHash": "$2a$12$samplehash",
+    "profile": {
+      "firstName": "Jane",
+      "lastName": "Doe",
+      "avatarUrl": "https://cdn.example.com/avatars/jane.png"
+    },
+    "authProvider": "local",
+    "authProviderId": null,
+    "roles": ["user"],
+    "createdAt": "2026-05-20T00:00:00.000Z",
+    "updatedAt": "2026-05-20T00:00:00.000Z"
+  },
+  {
+    "_id": "665000000000000000000002",
+    "username": "admin_user",
+    "email": "admin@example.com",
+    "passwordHash": "$2a$12$samplehash",
+    "profile": {
+      "firstName": "Admin",
+      "lastName": "User",
+      "avatarUrl": "https://cdn.example.com/avatars/admin.png"
+    },
+    "authProvider": "local",
+    "authProviderId": null,
+    "roles": ["admin"],
+    "createdAt": "2026-05-20T00:00:00.000Z",
+    "updatedAt": "2026-05-20T00:00:00.000Z"
+  }
+]

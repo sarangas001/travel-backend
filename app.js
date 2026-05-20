@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const cookieParser = require('cookie-parser');
 const apiRouter = require('./routes');
 const { notFound, errorHandler } = require('./middleware/errorHandler');
 
@@ -10,6 +11,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(express.json());
 
 app.get('/', (req, res) => {
