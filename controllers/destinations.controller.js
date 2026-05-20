@@ -1,5 +1,6 @@
 const Destination = require('../models/destination.model');
 const Review = require('../models/review.model');
+const SavedDestination = require('../models/savedDestination.model');
 const { validateDestinationPayload } = require('../validation/requests');
 
 const buildPagination = (page, limit) => ({
@@ -171,6 +172,11 @@ const deleteDestination = async (req, res, next) => {
         if (!deleted) {
             return res.status(404).json({ message: 'Destination not found' });
         }
+
+        await Promise.all([
+            Review.deleteMany({ destinationId: req.params.id }),
+            SavedDestination.deleteMany({ destinationId: req.params.id })
+        ]);
 
         res.status(200).json({ message: 'Destination deleted' });
     } catch (error) {

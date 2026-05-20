@@ -118,11 +118,32 @@ const validateReviewPayload = (payload) => {
     return errors;
 };
 
+const validateReviewUpdatePayload = (payload) => {
+    const errors = [];
+
+    if (payload.rating !== undefined) {
+        if (typeof payload.rating !== 'number' || payload.rating < 1 || payload.rating > 5) {
+            errors.push('rating must be a number between 1 and 5');
+        }
+    }
+
+    if (payload.comment !== undefined && typeof payload.comment !== 'string') {
+        errors.push('comment must be a string when provided');
+    }
+
+    if (payload.rating === undefined && payload.comment === undefined) {
+        errors.push('at least one field must be provided');
+    }
+
+    return errors;
+};
+
 module.exports = {
     validateRegisterPayload,
     validateLoginPayload,
     validateProfilePayload,
     validateSavedPlacePayload,
     validateDestinationPayload,
-    validateReviewPayload
+    validateReviewPayload,
+    validateReviewUpdatePayload
 };
