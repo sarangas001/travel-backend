@@ -1,5 +1,7 @@
 const Destination = require('../models/destination.model');
 const Review = require('../models/review.model');
+const SavedDestination = require('../models/savedDestination.model');
+const { validateDestinationPayload } = require('../validation/requests');
 
 const buildPagination = (page, limit) => ({
     page: Math.max(parseInt(page, 10) || 1, 1),
@@ -106,8 +108,87 @@ const getDestinationReviews = async (req, res, next) => {
     }
 };
 
+const createDestination = async (req, res, next) => {
+    try {
+        const errors = validateDestinationPayload(req.body);
+
+        if (errors.length) {
+            return res.status(400).json({ message: 'Validation failed', errors });
+        }
+
+        const destination = await Destination.create({
+            name: req.body.name.trim(),
+            description: req.body.description.trim(),
+            category: req.body.category.trim(),
+            media: Array.isArray(req.body.media) ? req.body.media : [],
+            location: {
+                type: 'Point',
+                coordinates: req.body.location.coordinates
+            },
+            address: req.body.address || {},
+            tags: Array.isArray(req.body.tags) ? req.body.tags : []
+        });
+
+        res.status(201).json({ data: destination });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const updateDestination = async (req, res, next) => {
+    try {
+        const destination = await Destination.findById(req.params.id);
+
+        if (!destination) {
+            return res.status(404).json({ message: 'Destination not found' });
+        }
+
+        const updates = {};
+
+        if (req.body.name !== undefined) updates.name = req.body.name.trim();
+        if (req.body.description !== undefined) updates.description = req.body.description.trim();
+        if (req.body.category !== undefined) updates.category = req.body.category.trim();
+        if (req.body.media !== undefined) updates.media = req.body.media;
+        if (req.body.location !== undefined) updates.location = req.body.location;
+        if (req.body.address !== undefined) updates.address = req.body.address;
+        if (req.body.tags !== undefined) updates.tags = req.body.tags;
+
+        const updated = await Destination.findByIdAndUpdate(
+            req.params.id,
+            { $set: updates },
+            { new: true, runValidators: true }
+        ).lean();
+
+        res.status(200).json({ data: updated });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const deleteDestination = async (req, res, next) => {
+    try {
+        const deleted = await Destination.findByIdAndDelete(req.params.id).lean();
+
+        if (!deleted) {
+            return res.status(404).json({ message: 'Destination not found' });
+        }
+
+        await Promise.all([
+            Review.deleteMany({ destinationId: req.params.id }),
+            SavedDestination.deleteMany({ destinationId: req.params.id })
+        ]);
+
+        res.status(200).json({ message: 'Destination deleted' });
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     getDestinations,
     getDestinationById,
-    getDestinationReviews
+    getDestinationReviews,
+    createDestination,
+    updateDestination,
+    deleteDestination
 };
