@@ -60,9 +60,69 @@ const validateSavedPlacePayload = (payload) => {
     return errors;
 };
 
+const validateDestinationPayload = (payload) => {
+    const errors = [];
+
+    if (!payload.name || typeof payload.name !== 'string' || payload.name.trim().length < 2) {
+        errors.push('name must be at least 2 characters');
+    }
+
+    if (!payload.description || typeof payload.description !== 'string' || payload.description.trim().length < 10) {
+        errors.push('description must be at least 10 characters');
+    }
+
+    if (!payload.category || typeof payload.category !== 'string') {
+        errors.push('category is required');
+    }
+
+    if (!payload.location || typeof payload.location !== 'object') {
+        errors.push('location is required');
+    } else {
+        if (payload.location.type !== 'Point') {
+            errors.push('location.type must be Point');
+        }
+
+        if (!Array.isArray(payload.location.coordinates) || payload.location.coordinates.length !== 2) {
+            errors.push('location.coordinates must be an array of [longitude, latitude]');
+        } else {
+            const [longitude, latitude] = payload.location.coordinates;
+
+            if (typeof longitude !== 'number' || typeof latitude !== 'number') {
+                errors.push('location.coordinates must contain numeric longitude and latitude');
+            }
+        }
+    }
+
+    if (payload.media !== undefined && !Array.isArray(payload.media)) {
+        errors.push('media must be an array when provided');
+    }
+
+    if (payload.tags !== undefined && !Array.isArray(payload.tags)) {
+        errors.push('tags must be an array when provided');
+    }
+
+    return errors;
+};
+
+const validateReviewPayload = (payload) => {
+    const errors = [];
+
+    if (payload.rating === undefined || typeof payload.rating !== 'number' || payload.rating < 1 || payload.rating > 5) {
+        errors.push('rating must be a number between 1 and 5');
+    }
+
+    if (payload.comment !== undefined && typeof payload.comment !== 'string') {
+        errors.push('comment must be a string when provided');
+    }
+
+    return errors;
+};
+
 module.exports = {
     validateRegisterPayload,
     validateLoginPayload,
     validateProfilePayload,
-    validateSavedPlacePayload
+    validateSavedPlacePayload,
+    validateDestinationPayload,
+    validateReviewPayload
 };
